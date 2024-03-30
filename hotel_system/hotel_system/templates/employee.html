@@ -1,6 +1,17 @@
 {% extends "base.html" %} {% block title %} Employee System {% endblock %}
 {% block content %}
-<p> This is the employee page</p>
+<h1>Employee Controls</h1>
+<div class="btn-group-vertical gap-1 mt-2" role="group" >
+    <button type="button" class="btn btn-primary" style="border-radius:10px;">
+        Check-In a Customer
+    </button>
+    <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#databaseEditor" style="border-radius:10px;">
+        Modify Database
+    </button>
+</div>
+<div class="collapse" id="databaseEditor">
+    <p>placeholder</p>
+</div>
 {% endblock %}
 
 <!-- Book Room For Customer (Immediately As a Renting) -->
