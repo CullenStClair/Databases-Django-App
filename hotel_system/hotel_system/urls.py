@@ -17,14 +17,15 @@ Including another URLconf
 
 
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
 
-from . import views
+from hotel_system import views
 
-# this flie will control which url sends which page
+# this file will control which url sends which page
 
 urlpatterns = [
-    path("admin/", admin.site.urls), 
-    path("rooms/", views.rooms),    # urls with "rooms/ will serve up the 
-    path("", views.index)           # view inside of views.rooms
+    path("admin/", admin.site.urls),
+    path("rooms/", views.rooms),    # urls with "rooms/ will serve up the
+    path("", views.index),          # view inside of views.rooms
+    path("employee/", views.employee)
 ]
