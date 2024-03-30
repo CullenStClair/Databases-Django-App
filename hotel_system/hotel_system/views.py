@@ -12,6 +12,9 @@ def index(request):
 def rooms(request):
     return render(request, "rooms.html")
 
+def hotels(request):
+    return render(request, "hotels.html")
+
 # page for a specific room
 def room(request, room_id):
     try:

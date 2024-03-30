@@ -26,5 +26,6 @@ from . import views
 urlpatterns = [
     path("admin/", admin.site.urls), 
     path("rooms/", views.rooms),    # urls with "rooms/ will serve up the 
-    path("", views.index)           # view inside of views.rooms
+    path("", views.hotels)           # view inside of views.rooms
+
 ]
