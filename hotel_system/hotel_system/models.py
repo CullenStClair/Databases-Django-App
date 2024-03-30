@@ -66,16 +66,20 @@ class Room(models.Model):
         constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Room primary key')]
 
 class Amenity(models.Model):
-    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_hotel_id') 
-    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_room_num')
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='amenities')
+#    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_hotel_id') 
+#    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_room_num')
     amenity_type = models.CharField(max_length=100)
+#    class Meta: # composite primary key (hotel_id, room_num)
+#        constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Amenity primary key')]
     class Meta: # composite primary key (hotel_id, room_num)
-        constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Amenity primary key')]
+        constraints = [models.UniqueConstraint(fields=['room_id', 'amenity_type'], name='Amenity primary key')]
 
 class Issue(models.Model):
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
     issue_id = models.AutoField(primary_key=True)
-    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_hotel_id')
-    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_room_num')
+    #hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_hotel_id')
+    #room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_room_num')
     date_reported = models.CharField(max_length=100)
     issue_type = models.CharField(max_length=100)
 
@@ -89,8 +93,9 @@ class Customer(models.Model):
     registration_date = models.DateTimeField(auto_now_add=True)
 
 class BookingOrder(models.Model):
-    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_hotel_id")
-    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_room_num")
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+    #hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_hotel_id")
+    #room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_room_num")
     booking_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
