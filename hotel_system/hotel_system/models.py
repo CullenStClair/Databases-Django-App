@@ -45,13 +45,13 @@ class HotelPhoneNumbers(models.Model):
 
 class Employee(models.Model):
     employee_id = models.AutoField(primary_key=True)
-    first_name = models.CharField()
-    last_name = models.CharField()
-    address = models.CharField()
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
     ssn = models.IntegerField()
-    position = models.CharField() # write directly in the role of the employee
-    works_at = models.ForeignKey(Hotel, on_delete=models.SET_NULL)
-    works_for = models.ForeignKey('Employee', on_delete=models.SET_NULL)
+    position = models.CharField(max_length=100) # write directly in the role of the employee
+    works_at = models.ForeignKey(Hotel, null=True, on_delete=models.SET_NULL)
+    works_for = models.ForeignKey('Employee', null=True, on_delete=models.SET_NULL)
     class Meta: # ssn validation 
         constraints = [models.CheckConstraint(check=models.Q(ssn__gte=100000000) & models.Q(ssn__lt=999999999),
                                               name="must enter valid ssn")]
@@ -66,16 +66,16 @@ class Room(models.Model):
         constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Room primary key')]
 
 class Amenity(models.Model):
-    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE) 
-    room_num = models.ForeignKey(Room, on_delete=models.CASCADE)
+    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_hotel_id') 
+    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_room_num')
     amenity_type = models.CharField(max_length=100)
     class Meta: # composite primary key (hotel_id, room_num)
         constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Amenity primary key')]
 
 class Issue(models.Model):
     issue_id = models.AutoField(primary_key=True)
-    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    room_num = models.ForeignKey(Room, on_delete=models.CASCADE)
+    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_hotel_id')
+    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_room_num')
     date_reported = models.CharField(max_length=100)
     issue_type = models.CharField(max_length=100)
 
@@ -83,20 +83,20 @@ class Customer(models.Model):
     customer_id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    address = models.CharField()
-    identification_type = models.CharField()
-    identification_value = models.CharField()
+    address = models.CharField(max_length=100)
+    identification_type = models.CharField(max_length=100)
+    identification_value = models.CharField(max_length=100)
     registration_date = models.DateTimeField(auto_now_add=True)
 
 class BookingOrder(models.Model):
-    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE)
-    room_num = models.ForeignKey(Room, on_delete=models.CASCADE)
+    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_hotel_id")
+    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_room_num")
     booking_id = models.AutoField(primary_key=True)
     customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
     check_in_date = models.DateTimeField() 
     check_out_date = models.DateTimeField() 
-    cost = models.DecimalField(decimal_places=2)
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField()
 
 class BookingArchive(models.Model):
