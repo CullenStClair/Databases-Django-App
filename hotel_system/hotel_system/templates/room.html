@@ -1,0 +1,11 @@
+<p>{{room.price}}</p>
+<p>{{room.capacity}}</p>
+{% if room_info.amenities %}
+    <ul>
+    {% for amenity in room_info.amenities %}
+        <li><p>{{ amenity.amenity_type }}</p></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>This room has no provided amenities.</p>
+{% endif %}
