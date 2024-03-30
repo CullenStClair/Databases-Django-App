@@ -2,12 +2,13 @@ from django.http import Http404, HttpResponse
 from django.shortcuts import render
 
 # this is a python file defining all of the different pages
-from hotel_system.models import Amenity, Room
+from hotel_system.models import Amenity, Room, Hotel
 
 
 # Create your views here.
 def index(request):
-    return render(request, "hotels.html")
+   hotels = Hotel.objects.all()
+   return render(request, "hotels.html", {"hotels": hotels})
 
 
 def rooms(request, hotel_id):

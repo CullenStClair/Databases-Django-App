@@ -25,6 +25,7 @@ class Hotel(models.Model):
     star_rating = models.IntegerField()
     email_address = models.CharField(max_length=100)
     managed_by = models.ForeignKey('Employee', on_delete=models.CASCADE)
+    city = models.CharField(max_length=100)
 
     class Meta:  # this enforces star rating constraints on a database level (it seems this is the only way to do this)
         constraints = [models.CheckConstraint(check=models.Q(star_rating__gte=1) & models.Q(star_rating__lt=5),
