@@ -1,7 +1,7 @@
 {% extends "base.html" %} {% block title %} Employee System {% endblock %}
 {% block content %}
 <h1>Employee Controls</h1>
-<div class="btn-group-vertical gap-1 mt-2" role="group" >
+<div class="btn-group-vertical gap-3 mt-2" role="group" >
     <button type="button" class="btn btn-primary" style="border-radius:10px;">
         Check-In a Customer
     </button>
@@ -9,8 +9,45 @@
         Modify Database
     </button>
 </div>
-<div class="collapse" id="databaseEditor">
-    <p>placeholder</p>
+<div class="collapse mt-3" id="databaseEditor">
+    <div class="accordion" id="accordionParent">
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
+                    Table 1
+                </button>
+            </h2>
+            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
+                <div class="accordion-body">
+                    Table 1 Form
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
+                    Table 2
+                </button>
+            </h2>
+            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
+                <div class="accordion-body">
+                    Table 2 Form
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
+                    Table 3
+                </button>
+            </h2>
+            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
+                <div class="accordion-body">
+                    Table 3 Form
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
 
