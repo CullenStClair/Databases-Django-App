@@ -7,17 +7,11 @@ from hotel_system.models import Amenity, Room
 
 # Create your views here.
 def index(request):
-    return render(request, "rooms.html")
-    # return HttpResponse("Hello world!")
-
-
-def rooms(request):
-    return render(request, "rooms.html")
-
-def hotels(request):
     return render(request, "hotels.html")
 
-# page for a specific room
+
+def rooms(request, hotel_id):
+    return render(request, "rooms.html")
 
 
 def room(request, room_id):
