@@ -1,15 +1,24 @@
-<p>Price (per night): {{room.price}}</p>
-<p>Room Capacity: {{room.capacity}}</p>
-
-{% if room_info.extendable %}
-<p>Extendable</p>
-{% else %}
-<p>Not Extendable</p>
-{% endif %}
-
-{% if room_info.amenities %}
-    <ul>
-    </ul>
-{% else %}
-    <p>This room has no provided amenities.</p>
-{% endif %}
+{% extends "base.html" %} {% block title %} Room {% endblock %}
+{% block content %}
+{% load static %}
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md">
+                <img class="img-thumbnail" src="https://external-content.duckduckgo.com/iu/?u=http%3A%2F%2Fwww.bestwesternplusmeridian.com%2FContent%2Fimages%2FQueen-Room-o.jpg&f=1&nofb=1&ipt=bea89494352c056dacc3a817b7a6785185e8c2eaed11403562def65949e7ba05&ipo=images">
+            </div>
+            <div class="col-md">
+                <h5>Room #{{ room.room_num }} </h5>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">${{ room.price }} / night</li>
+                    <li class="list-group-item">Max capacity: {{ room.capacity }} people</li>
+                    <li class="list-group-item">Extendable: {{ room.is_extendable }}</li>
+                    {% for amenity in room.amenities.all %}
+                    <li class="list-group-item">{{ amenity.type }}</li>
+                    {% endfor %}
+                </ul> 
+            </div>
+        </div>
+    </div> 
+</body>
+{% endblock %}
