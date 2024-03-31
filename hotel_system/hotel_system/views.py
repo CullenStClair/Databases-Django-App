@@ -9,11 +9,11 @@ from hotel_system.models import Amenity, Room, Hotel, HotelChain
 # Create your views here.
 def index(request):
     all_hotels = Hotel.objects.all()
-    hotel_locations = set([hotel.city for hotel in all_hotels])
+    hotel_locations = set([hotel.address for hotel in all_hotels])
 
     filtered_hotels = all_hotels
     if request.GET.getlist("chain"):
-        filtered_hotels = all_hotels.filter(hotel_chain_id__in=request.GET.getlist("chain"))
+        filtered_hotels = all_hotels.filter(chain_id__in=request.GET.getlist("chain"))
     
     all_chains = HotelChain.objects.all()
     return render(request, "hotels.html", {"hotels": filtered_hotels, "chains": all_chains,})
