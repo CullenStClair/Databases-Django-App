@@ -4,8 +4,60 @@
 <body>
 
     <div>
-        <h1>Choose a Hotel</h1>
+        <h1 class="mt-2">Choose a Hotel</h1>
     </div>
+      <button class="btn btn-primary mb-3" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        Filter Hotels
+      </button>
+      
+      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Filter Hotels</h5>
+          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                Hotel Chain
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+          <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                Star Rating
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+          <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                Location
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+          <div class="dropdown mt-3">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+                Price
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">Action</a></li>
+              <li><a class="dropdown-item" href="#">Another action</a></li>
+              <li><a class="dropdown-item" href="#">Something else here</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
     {% if hotels %}    
     <div class="row row-cols-auto g-4">
@@ -33,7 +85,7 @@
                         {% endif %}  
                         </p>
                         <p class="card-text">{{ hotel.city }}</p>
-                        <p class="card-text">${{ hotel.max_price }} - ${{ hotel.min_price }}</p>
+                        <p class="card-text">${{ hotel.min_price }} - ${{ hotel.max_price }}</p>
                     </div>
                 </div>
             </div>
@@ -43,65 +95,6 @@
     {% else %}
     <p>No hotels exist.</p>
     {% endif %}
-
-    <div class="row row-cols-1 row-cols-md-3 g-4">
-        <div class="col py-3">
-            <div class="card h-100" style="width: 18rem;">
-                <img src={% static "hotel1.jpg" %} class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Hotel Chain 1</h5>
-                    <div class="card-text">
-                        <p>Location</p>
-                        <p>Price Range</p>
-                        <p>Hotel Star Rating</p>
-                        <p>{{hotel.hotel_name}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col py-3">
-            <div class="card h-100" style="width: 18rem;">
-                <img src={% static "hotel2.jpg" %} class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Hotel Chain 2</h5>
-                    <div class="card-text">
-                        <p>Location</p>
-                        <p>Price Range</p>
-                        <p>Hotel Star Rating</p>
-                        <p>{{hotel.hotel_name}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col py-3">
-            <div class="card h-100" style="width: 18rem;">
-                <img src={% static "hotel3.jpg" %} class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Hotel Chain 3</h5>
-                    <div class="card-text">
-                        <p>Location</p>
-                        <p>Price Range</p>
-                        <p>Hotel Star Rating</p>
-                        <p>{{hotel.hotel_name}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col py-3">
-            <div class="card h-100" style="width: 18rem;">
-                <img src={% static "hotel4.jpg" %} class="card-img-top">
-                <div class="card-body">
-                    <h5 class="card-title">Hotel Chain 4</h5>
-                    <div class="card-text">
-                        <p>Location</p>
-                        <p>Price Range</p>
-                        <p>Hotel Star Rating</p>
-                        <p>{{hotel.hotel_name}}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </body>
 {% endblock %}
