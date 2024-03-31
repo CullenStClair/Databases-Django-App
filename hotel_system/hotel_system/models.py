@@ -27,6 +27,17 @@ class Hotel(models.Model):
     managed_by = models.ForeignKey('Employee', on_delete=models.CASCADE)
     city = models.CharField(max_length=100)
 
+    @property
+    def max_price(self):
+        rooms = self.rooms.all()
+        return round(rooms.aggregate(models.Max("price"))['price__max'], 2)
+
+    @property
+    def min_price(self):
+        rooms = self.rooms.all()
+        return round(rooms.aggregate(models.Min("price"))['price__min'], 2)
+
+
     class Meta:  # this enforces star rating constraints on a database level (it seems this is the only way to do this)
         constraints = [models.CheckConstraint(check=models.Q(star_rating__gte=1) & models.Q(star_rating__lte=5),
                                               name="star rating must be between 1 and 5")]
