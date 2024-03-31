@@ -18,7 +18,7 @@ class HotelChain(models.Model):
 
 
 class Hotel(models.Model):
-    hotel_chain = models.ForeignKey(HotelChain, on_delete=models.CASCADE)
+    hotel_chain = models.ForeignKey(HotelChain, on_delete=models.CASCADE, related_name='hotels')
     hotel_id = models.AutoField(primary_key=True)
     hotel_name = models.CharField(max_length=100)
     num_rooms = models.PositiveIntegerField()
@@ -28,7 +28,7 @@ class Hotel(models.Model):
     city = models.CharField(max_length=100)
 
     class Meta:  # this enforces star rating constraints on a database level (it seems this is the only way to do this)
-        constraints = [models.CheckConstraint(check=models.Q(star_rating__gte=1) & models.Q(star_rating__lt=5),
+        constraints = [models.CheckConstraint(check=models.Q(star_rating__gte=1) & models.Q(star_rating__lte=5),
                                               name="star rating must be between 1 and 5")]
 
 
@@ -49,7 +49,8 @@ class ChainPhoneNumber(models.Model):
 
 class HotelPhoneNumbers(models.Model):
     phone_number = models.IntegerField(primary_key=True)
-    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel = models.ForeignKey(Hotel, on_delete=models.CASCADE) # this doesn't seem quite right
+                                                               # shouldn't really need a FK
 
 
 class Employee(models.Model):
@@ -59,8 +60,8 @@ class Employee(models.Model):
     address = models.CharField(max_length=100)
     ssn = models.IntegerField()
     position = models.CharField(max_length=100)  # write directly in the role of the employee
-    works_at = models.ForeignKey(Hotel, null=True, on_delete=models.SET_NULL)
-    works_for = models.ForeignKey('Employee', null=True, on_delete=models.SET_NULL)
+    works_at = models.ForeignKey(Hotel, null=True, on_delete=models.SET_NULL, related_name='employees')
+    works_for = models.ForeignKey(Employee, null=True, on_delete=models.SET_NULL, related_name='employing')
 
     class Meta:  # ssn validation
         constraints = [models.CheckConstraint(check=models.Q(ssn__gte=100000000) & models.Q(ssn__lt=999999999),
@@ -68,7 +69,7 @@ class Employee(models.Model):
 
 
 class Room(models.Model):
-    hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE)
+    hotel_id = models.ForeignKey(Hotel, on_delete=models.CASCADE, related_name='rooms')
     room_num = models.IntegerField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
     capacity = models.IntegerField()
@@ -91,7 +92,7 @@ class Amenity(models.Model):
 
 
 class Issue(models.Model):
-    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='issues')
     issue_id = models.AutoField(primary_key=True)
     # hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_hotel_id')
     # room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_room_num')
@@ -110,7 +111,7 @@ class Customer(models.Model):
 
 
 class BookingOrder(models.Model):
-    room_id = models.ForeignKey(Room, on_delete=models.CASCADE)
+    room_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='orders')
     # hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_hotel_id")
     # room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_room_num")
     booking_id = models.AutoField(primary_key=True)
