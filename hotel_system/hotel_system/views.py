@@ -24,7 +24,7 @@ def room(request, room_id):
 
 def hotel(request, hotel_id):
     try:
-        hotel = Hotel.objects.get(hotel_id=hotel_id)
+        hotel = Hotel.objects.get(id=hotel_id)
     except Hotel.DoesNotExist:
         raise Http404(f"Hotel id: {hotel_id}, does not exist")
     return render(request, "rooms.html", {"hotel": hotel})

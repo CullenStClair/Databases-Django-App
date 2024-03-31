@@ -2,7 +2,7 @@
 {% block content %}
 {% load static %}
 <body>
-    <h1>{{ hotel.hotel_name }}</h1>
+    <h1>{{ hotel.name }}</h1>
     {% if hotel.rooms %}
     <div class="row row-cols-auto g-4">
         {% for room in hotel.rooms.all %}
