@@ -3,22 +3,13 @@ from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render
 
 # this is a python file defining all of the different pages
-<<<<<<< HEAD
 from hotel_system.models import Amenity, Room, Hotel, HotelChain
-=======
-from hotel_system.models import Amenity, Hotel, Room
->>>>>>> b51e9d26066e25092a0c5f372afe8aad5745a8dc
 
 
 # Create your views here.
 def index(request):
-<<<<<<< HEAD
     all_hotels = Hotel.objects.all()
     hotel_locations = set([hotel.city for hotel in all_hotels])
-=======
-    hotels = Hotel.objects.all()
-    return render(request, "hotels.html", {"hotels": hotels})
->>>>>>> b51e9d26066e25092a0c5f372afe8aad5745a8dc
 
     filtered_hotels = all_hotels
     if request.GET.getlist("chain"):
