@@ -2,7 +2,6 @@
 {% block content %}
 {% load static %}
 <body>
-
     <div>
         <h1 class="mt-2">Choose a Hotel</h1>
     </div>
@@ -66,10 +65,10 @@
             <div class="card h-100" style="width: 18rem;">
                 <img src={% cycle "../static/hotel1.jpg" "../static/hotel2.jpg" "../static/hotel3.jpg" "../static/hotel4.jpg" %} class="card-img-top">
                 <div class="card-body">
-                    <a href="/hotel/{{ hotel.hotel_id }}">
-                        <h5 class="card-title">{{ hotel.hotel_name }}</h5>
+                    <a href="/hotel/{{ hotel.id }}">
+                        <h5 class="card-title">{{ hotel.name }}</h5>
                     </a>
-                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ hotel.hotel_chain.name }}</h6>
+                    <h6 class="card-subtitle mb-2 text-body-secondary">{{ hotel.chain.name }}</h6>
                     <div>
                         <p class="card-text">
                         {% if hotel.star_rating == 1 %}
@@ -95,6 +94,5 @@
     {% else %}
     <p>No hotels exist.</p>
     {% endif %}
-
 </body>
 {% endblock %}

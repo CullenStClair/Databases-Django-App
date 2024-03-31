@@ -22,6 +22,13 @@ def room(request, room_id):
         raise Http404(f"Room id: {room_id}, does not exist")
     return render(request, "room.html", {"room": room})
 
+def hotel(request, hotel_id):
+    try:
+        hotel = Hotel.objects.get(id=hotel_id)
+    except Hotel.DoesNotExist:
+        raise Http404(f"Hotel id: {hotel_id}, does not exist")
+    return render(request, "rooms.html", {"hotel": hotel})
+
 
 def employee(request):
     if request.method == "GET":
