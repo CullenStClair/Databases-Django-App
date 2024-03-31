@@ -22,6 +22,7 @@ def room(request, room_id):
         raise Http404(f"Room id: {room_id}, does not exist")
     return render(request, "room.html", {"room": room})
 
+
 def hotel(request, hotel_id):
     try:
         hotel = Hotel.objects.get(id=hotel_id)
@@ -31,8 +32,4 @@ def hotel(request, hotel_id):
 
 
 def employee(request):
-    if request.method == "GET":
-        return render(request, "employee.html")
-    elif request.method == "POST":
-        raise HttpResponseNotAllowed("Not implemented")
-        # return render(request, "employee.html")
+    return render(request, "employee.html")
