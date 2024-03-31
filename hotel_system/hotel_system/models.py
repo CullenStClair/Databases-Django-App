@@ -18,14 +18,14 @@ class HotelChain(models.Model):
 
 
 class Hotel(models.Model):
-    hotel_chain = models.ForeignKey('HotelChain', on_delete=models.CASCADE, related_name='hotels')
-    hotel_id = models.AutoField(primary_key=True)
-    hotel_name = models.CharField(max_length=100)
+    chain = models.ForeignKey('HotelChain', on_delete=models.CASCADE, related_name='hotels')
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=100)
     num_rooms = models.PositiveIntegerField()
     star_rating = models.IntegerField()
     email_address = models.CharField(max_length=100)
     managed_by = models.ForeignKey('Employee', on_delete=models.CASCADE)
-    city = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
 
     @property
     def max_price(self):
@@ -45,13 +45,13 @@ class Hotel(models.Model):
 
 class ChainEmailAddress(models.Model):
     email_address = models.CharField(max_length=100, primary_key=True)
-    hotel_chain = models.ForeignKey('HotelChain', on_delete=models.CASCADE)  # django can use a foreign key object
+    chain = models.ForeignKey('HotelChain', on_delete=models.CASCADE)  # django can use a foreign key object
     # i.e. we won't use chain name as the joining
 
 
 class ChainPhoneNumber(models.Model):
     phone_number = models.IntegerField(primary_key=True)
-    hotel_chain = models.ForeignKey('HotelChain', on_delete=models.CASCADE)
+    chain = models.ForeignKey('HotelChain', on_delete=models.CASCADE)
 
     class Meta:  # phone number validation, should look into doing with a phone number field
         constraints = [models.CheckConstraint(check=models.Q(phone_number__gte=1000000000) & models.Q(phone_number__lt=9999999999),
@@ -64,7 +64,7 @@ class HotelPhoneNumbers(models.Model):
                                                                # shouldn't really need a FK
 
 class Employee(models.Model):
-    employee_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
@@ -78,39 +78,39 @@ class Employee(models.Model):
                                               name="must enter valid ssn")]
 
 class Room(models.Model):
-    hotel_id = models.ForeignKey('Hotel', on_delete=models.CASCADE, related_name='rooms')
+    hotel = models.ForeignKey('Hotel', on_delete=models.CASCADE, related_name='rooms')
     room_num = models.IntegerField()
     price = models.DecimalField(max_digits=7, decimal_places=2)
     capacity = models.IntegerField()
     is_extendable = models.BooleanField()
 
     class Meta:  # composite primary key (hotel_id, room_num)
-        constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Room primary key')]
+        constraints = [models.UniqueConstraint(fields=['hotel', 'room_num'], name='Room primary key')]
 
 
 class Amenity(models.Model):
-    room_id = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='amenities')
+    room = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='amenities')
 #    hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_hotel_id')
 #    room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Amenity_room_num')
-    amenity_type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
 #    class Meta: # composite primary key (hotel_id, room_num)
 #        constraints = [models.UniqueConstraint(fields=['hotel_id', 'room_num'], name='Amenity primary key')]
 
     class Meta:  # composite primary key (hotel_id, room_num)
-        constraints = [models.UniqueConstraint(fields=['room_id', 'amenity_type'], name='Amenity primary key')]
+        constraints = [models.UniqueConstraint(fields=['room', 'type'], name='Amenity primary key')]
 
 
 class Issue(models.Model):
-    room_id = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='issues')
-    issue_id = models.AutoField(primary_key=True)
+    room = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='issues')
+    id = models.AutoField(primary_key=True)
     # hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_hotel_id')
     # room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name='Issue_room_num')
     date_reported = models.CharField(max_length=100)
-    issue_type = models.CharField(max_length=100)
+    type = models.CharField(max_length=100)
 
 
 class Customer(models.Model):
-    customer_id = models.AutoField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     address = models.CharField(max_length=100)
@@ -120,11 +120,11 @@ class Customer(models.Model):
 
 
 class BookingOrder(models.Model):
-    room_id = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='orders')
+    room = models.ForeignKey('Room', on_delete=models.CASCADE, related_name='orders')
     # hotel_id = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_hotel_id")
     # room_num = models.ForeignKey(Room, on_delete=models.CASCADE, related_name="BookingOrder_room_num")
-    booking_id = models.AutoField(primary_key=True)
-    customer_id = models.ForeignKey('Customer', on_delete=models.CASCADE)
+    id = models.AutoField(primary_key=True)
+    customer = models.ForeignKey('Customer', on_delete=models.CASCADE)
     booking_date = models.DateTimeField(auto_now_add=True)
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
