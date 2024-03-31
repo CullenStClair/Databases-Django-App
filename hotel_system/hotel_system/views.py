@@ -17,10 +17,10 @@ def rooms(request, hotel_id):
 
 def room(request, room_id):
     try:
-        room_info = Room.objects.get(pk=room_id)
+        room = Room.objects.get(id=room_id)
     except Room.DoesNotExist:
         raise Http404(f"Room id: {room_id}, does not exist")
-    return render(request, "room.html", {"room_info": room_info})
+    return render(request, "room.html", {"room": room})
 
 
 def employee(request):

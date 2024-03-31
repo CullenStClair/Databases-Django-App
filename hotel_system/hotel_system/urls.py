@@ -25,6 +25,7 @@ from hotel_system import views
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("room/<int:room_id>/", views.room),
     path("rooms/", views.rooms),
     path("", views.index),    
     path("employee/", views.employee)
