@@ -7,73 +7,98 @@
         <h1>Choose a Hotel</h1>
     </div>
 
-    {% if hotel.hotel_id %}    
-        {% for hotels in hotels %}
-        
-            {% endfor %}
+    {% if hotels %}    
+    {% for hotel in hotels %}
+    <div class="card h-100" style="width: 18rem;">
+        <img src={% static "hotel1.jpg" %} class="card-img-top">
+        <div class="card-body">
+            <a href="/hotel/{{ hotel.hotel_id }}">
+                <h5 class="card-title">{{ hotel.hotel_name }}</h5>
+            </a>
+            <h6 class="card-subtitle mb-2 text-body-secondary">{{ hotel.hotel_chain.name }}</h6>
+            <div>
+                <p class="card-text">
+                {% if hotel.star_rating == 1 %}
+                ⭐ 
+                {% elif hotel.star_rating == 2 %}
+                ⭐⭐
+                {% elif hotel.star_rating == 3 %}
+                ⭐⭐⭐
+                {% elif hotel.star_rating == 4 %}
+                ⭐⭐⭐⭐ 
+                {% elif hotel.star_rating == 5 %}
+                ⭐⭐⭐⭐⭐
+                {% endif %}  
+                </p>
+                <p class="card-text">{{ hotel.city }}</p>
+                <p class="card-text">Price Range</p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
     {% else %}
-        <p>No hotels exist.</p>
+    <p>No hotels exist.</p>
     {% endif %}
 
     <div class="row row-cols-1 row-cols-md-3 g-4">
         <div class="col py-3">
-          <div class="card h-100" style="width: 18rem;">
-            <img src={% static "hotel1.jpg" %} class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Hotel Chain 1</h5>
-                <div class="card-text">
-                    <p>Location</p>
-                    <p>Price Range</p>
-                    <p>Hotel Star Rating</p>
-                    <p>{{hotel.hotel_name}}</p>
+            <div class="card h-100" style="width: 18rem;">
+                <img src={% static "hotel1.jpg" %} class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">Hotel Chain 1</h5>
+                    <div class="card-text">
+                        <p>Location</p>
+                        <p>Price Range</p>
+                        <p>Hotel Star Rating</p>
+                        <p>{{hotel.hotel_name}}</p>
+                    </div>
                 </div>
             </div>
-          </div>
         </div>
         <div class="col py-3">
             <div class="card h-100" style="width: 18rem;">
                 <img src={% static "hotel2.jpg" %} class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Hotel Chain 2</h5>
-              <div class="card-text">
-                <p>Location</p>
-                <p>Price Range</p>
-                <p>Hotel Star Rating</p>
-                <p>{{hotel.hotel_name}}</p>
+                <div class="card-body">
+                    <h5 class="card-title">Hotel Chain 2</h5>
+                    <div class="card-text">
+                        <p>Location</p>
+                        <p>Price Range</p>
+                        <p>Hotel Star Rating</p>
+                        <p>{{hotel.hotel_name}}</p>
+                    </div>
+                </div>
             </div>
-            </div>
-          </div>
         </div>
         <div class="col py-3">
             <div class="card h-100" style="width: 18rem;">
                 <img src={% static "hotel3.jpg" %} class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Hotel Chain 3</h5>
-              <div class="card-text">
-                <p>Location</p>
-                <p>Price Range</p>
-                <p>Hotel Star Rating</p>
-                <p>{{hotel.hotel_name}}</p>
+                <div class="card-body">
+                    <h5 class="card-title">Hotel Chain 3</h5>
+                    <div class="card-text">
+                        <p>Location</p>
+                        <p>Price Range</p>
+                        <p>Hotel Star Rating</p>
+                        <p>{{hotel.hotel_name}}</p>
+                    </div>
+                </div>
             </div>
-            </div>
-          </div>
         </div>
         <div class="col py-3">
             <div class="card h-100" style="width: 18rem;">
                 <img src={% static "hotel4.jpg" %} class="card-img-top">
-            <div class="card-body">
-              <h5 class="card-title">Hotel Chain 4</h5>
-              <div class="card-text">
-                <p>Location</p>
-                <p>Price Range</p>
-                <p>Hotel Star Rating</p>
-                <p>{{hotel.hotel_name}}</p>
+                <div class="card-body">
+                    <h5 class="card-title">Hotel Chain 4</h5>
+                    <div class="card-text">
+                        <p>Location</p>
+                        <p>Price Range</p>
+                        <p>Hotel Star Rating</p>
+                        <p>{{hotel.hotel_name}}</p>
+                    </div>
+                </div>
             </div>
-            </div>
-          </div>
         </div>
-      </div>
-    
+    </div>
+
 </body>
 {% endblock %}
