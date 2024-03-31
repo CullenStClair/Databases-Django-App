@@ -5,56 +5,22 @@
     <button type="button" class="btn btn-primary" style="border-radius:10px;">
         Check-In a Customer
     </button>
-    <button class="btn btn-danger" type="button" data-bs-toggle="collapse" data-bs-target="#databaseEditor" style="border-radius:10px;">
-        Modify Database
-    </button>
-</div>
-<div class="collapse mt-3" id="databaseEditor">
-    <div class="accordion" id="accordionParent">
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne">
-                    Table 1
-                </button>
-            </h2>
-            <div id="collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
-                <div class="accordion-body">
-                    Table 1 Form
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo">
-                    Table 2
-                </button>
-            </h2>
-            <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
-                <div class="accordion-body">
-                    Table 2 Form
-                </div>
-            </div>
-        </div>
-        <div class="accordion-item">
-            <h2 class="accordion-header">
-                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree">
-                    Table 3
-                </button>
-            </h2>
-            <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionParent">
-                <div class="accordion-body">
-                    Table 3 Form
-                </div>
-            </div>
-        </div>
+    <div class="dropdown">
+        <button class="btn btn-danger dropdown-toggle" type="button" data-bs-toggle="dropdown" style="border-radius:10px;">
+            Manage Database
+        </button>
+        <ul class="dropdown-menu">
+            {% if model_names %}
+                {% for name in model_names %}
+                <li><a href="crud/{{ name }}/" class="dropdown-item">{{ name }}</a></li>
+                {% endfor %}
+            {% else %}
+            <li><a href="#" class="dropdown-item disabled">No tables found in database</a></li>
+            {% endif %}
+        </ul>
     </div>
 </div>
 {% endblock %}
 
 <!-- Book Room For Customer (Immediately As a Renting) -->
 <!-- Check in Customer (Booking->Renting) -->
-
-<!-- Admin Stuff: -->
-<!-- Modify Customer Table -->
-<!-- Modify Employee Table -->
-<!-- Modify Other Tables (Hotels, Rooms, etc) -->

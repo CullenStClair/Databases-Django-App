@@ -1,3 +1,4 @@
+from django.apps import apps
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render
 
@@ -32,4 +33,9 @@ def hotel(request, hotel_id):
 
 
 def employee(request):
-    return render(request, "employee.html")
+    model_names = [model.__name__ for model in apps.get_app_config('hotel_system').get_models()]
+    return render(request, "employee.html", {"model_names": model_names})
+
+
+def crud(request, model_name):
+    return render(request, "crud.html")
