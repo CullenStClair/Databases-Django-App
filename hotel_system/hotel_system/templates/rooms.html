@@ -1,45 +1,29 @@
 {% extends "base.html" %} {% block title %} Rooms {% endblock %}
 {% block content %}
-<style>
-    div.mycontainer {
-      width:100%;
-      overflow:auto;
-    }
-    div.mycontainer div {
-      width:30%;  
-      float:left;
-      border: 2px solid black;
-      margin: 10px;
-      padding:10px;
-    }
-</style>
+{% load static %}
 <body>
-
-    <div> 
-        <h1>Book a Room</h1>
+    <h1>{{ hotel.hotel_name }}</h1>
+    {% if hotel.rooms %}
+    <div class="row row-cols-auto g-4">
+        {% for room in hotel.rooms.all %}
+        <div class="col">
+            <div class="card h-100" style="width: 18rem;">
+                <img src={% cycle "../static/hotel1.jpg" "../static/hotel2.jpg" "../static/hotel3.jpg" "../static/hotel4.jpg" %} class="card-img-top">
+                <div class="card-body">
+                    <a href="/room/{{ room.id }}">
+                        <h5 class="card-title">Room #{{ room.room_num }}</h5>
+                    </a>
+                    <div>
+                        <p class="card-text">${{ room.price }}/Night</p>
+                        <p class="card-text">{{ room.capacity }} person capacity</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
     </div>
-
-    <div class="mycontainer">
-    
-    <div>
-        <h2>Hotel Name 1</h2>
-        <p>Capacity</p>
-        <p>Price</p>
-    </div>
-      
-    <div>
-        <h2>Hotel Name 2</h2>
-        <p>Capacity</p>
-        <p>Price</p>
-    </div>
-      
-    <div>
-        <h2>Hotel Name 3</h2>
-        <p>Capacity</p>
-        <p>Price</p>
-    </div>
-    
-    </div>
-    
+    {% else %}
+    <p>No rooms exist.</p>
+    {% endif %}
 </body>
 {% endblock %}
