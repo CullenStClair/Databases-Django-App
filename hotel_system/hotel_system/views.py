@@ -11,7 +11,6 @@ from hotel_system.models import Amenity, Hotel, HotelChain, Room
 def index(request):
     all_hotels = Hotel.objects.all()
     hotel_locations = set([hotel.address for hotel in all_hotels])
-    
 
     filtered_hotels = all_hotels
     if request.GET.getlist("chain"):
@@ -39,6 +38,7 @@ def index(request):
 def hotel_rooms(request, hotel_id):
     try:
         hotels = Hotel.objects.get(id=hotel_id)
+        
     except Hotel.DoesNotExist:
         raise Http404(f"Hotel id: {hotel_id}, does not exist")
     return render(request, "hotel_rooms.html", {"hotel": hotels})
