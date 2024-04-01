@@ -27,7 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("hotel/<int:hotel_id>/", views.hotel),
     path("room/<int:room_id>/", views.room),
-    path("rooms/", views.rooms),
+    path("rooms/<int:hotel_id>", views.rooms),
     path("", views.index),
     path("employee/", views.employee),
     path("employee/crud/<str:model_name>/", views.crud)
