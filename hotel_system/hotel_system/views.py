@@ -12,18 +12,37 @@ from hotel_system.forms import BookingForm
 def index(request):
     all_hotels = Hotel.objects.all()
     hotel_locations = set([hotel.address for hotel in all_hotels])
+    
 
     filtered_hotels = all_hotels
     if request.GET.getlist("chain"):
         filtered_hotels = all_hotels.filter(chain_id__in=request.GET.getlist("chain"))
 
+    if request.GET.getlist("star_rating"):
+        filtered_hotels = filtered_hotels.filter(star_rating__gte=request.GET.get("star_rating"))
+
+    if request.GET.get("min_price") and request.GET.get("max_price"):
+        try:
+            min_price = float(request.GET.get("min_price"))
+            max_price = float(request.GET.get("max_price"))
+            print(min_price, "--", max_price)
+            filtered_hotels = [hotel for hotel in filtered_hotels if hotel.min_price >= min_price and hotel.max_price <= max_price]
+        except ValueError:
+            raise HttpResponseBadRequest()
+        
+    if request.GET.getlist("location"):
+        filtered_hotels = all_hotels.filter(address__in=request.GET.getlist("location"))
+
     all_chains = HotelChain.objects.all()
     return render(request, "hotels.html", {"hotels": filtered_hotels, "chains": all_chains, })
 
 
-def rooms(request, hotel_id):
-    return render(request, "rooms.html")
-
+def hotel_rooms(request, hotel_id):
+    try:
+        hotels = Hotel.objects.get(id=hotel_id)
+    except Hotel.DoesNotExist:
+        raise Http404(f"Hotel id: {hotel_id}, does not exist")
+    return render(request, "hotel_rooms.html", {"hotel": hotels})
 
 def room(request, room_id):
     try:
