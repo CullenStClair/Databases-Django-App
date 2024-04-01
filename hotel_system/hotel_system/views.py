@@ -1,9 +1,10 @@
 from django.apps import apps
-from django.http import Http404, HttpResponse, HttpResponseNotAllowed
+from django.db import models
+from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import render
 
 # this is a python file defining all of the different pages
-from hotel_system.models import Amenity, Room, Hotel, HotelChain
+from hotel_system.models import Amenity, Hotel, HotelChain, Room
 
 
 # Create your views here.
@@ -14,9 +15,10 @@ def index(request):
     filtered_hotels = all_hotels
     if request.GET.getlist("chain"):
         filtered_hotels = all_hotels.filter(chain_id__in=request.GET.getlist("chain"))
-    
+
     all_chains = HotelChain.objects.all()
-    return render(request, "hotels.html", {"hotels": filtered_hotels, "chains": all_chains,})
+    return render(request, "hotels.html", {"hotels": filtered_hotels, "chains": all_chains, })
+
 
 def rooms(request, hotel_id):
     return render(request, "rooms.html")
@@ -44,4 +46,11 @@ def employee(request):
 
 
 def crud(request, model_name):
-    return render(request, "crud.html")
+    try:
+        Model = apps.get_model("hotel_system", model_name)
+    except LookupError:
+        raise Http404(f"Table: {model_name}, does not exist in the database")
+    rows = Model.objects.all().defer("").values_list()
+    print(rows)
+    fields = [field.name for field in Model._meta.get_fields() if not isinstance(field, models.ManyToOneRel)]
+    return render(request, "crud.html", {"model_name": model_name, "rows": rows, "fields": fields})

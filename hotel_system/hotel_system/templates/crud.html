@@ -1,3 +1,27 @@
-{% extends "base.html" %} {% block title %} Employee System {% endblock %}
+{% extends "base.html" %} {% block title %} Viewing {{model_name}} {% endblock %}
 {% block content %}
+<table class="table table-hover table-sm">  
+    <thead>  
+        <tr>  
+            {% for field_name in fields %}
+            <th>{{ field_name }}</th>
+            {% endfor %}
+        </tr>  
+    </thead>  
+    <tbody class="table-group-divider">
+        {% for row in rows %}  
+        <tr>  
+            {% for value in row %}
+                <td class="align-middle">{% if not value %}N/A{% else %}{{ value }}{% endif %}</td>
+            {% endfor %}  
+            <td>  
+                <a class="btn btn-warning" href="#">Edit</span></a>  
+                <a class="btn btn-danger" href="#">Delete</a>  
+            </td>  
+        </tr>  
+        {% endfor %}  
+    </tbody>  
+</table>
+<br>
+<center><a href="#" class="btn btn-primary">Add New Record</a></center>  
 {% endblock %}
