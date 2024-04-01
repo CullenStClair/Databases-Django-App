@@ -1,5 +1,5 @@
 from django.apps import apps
-from django.http import Http404, HttpResponse, HttpResponseNotAllowed
+from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import render
 
 # this is a python file defining all of the different pages
@@ -10,11 +10,27 @@ from hotel_system.models import Amenity, Room, Hotel, HotelChain
 def index(request):
     all_hotels = Hotel.objects.all()
     hotel_locations = set([hotel.address for hotel in all_hotels])
+    
 
     filtered_hotels = all_hotels
     if request.GET.getlist("chain"):
         filtered_hotels = all_hotels.filter(chain_id__in=request.GET.getlist("chain"))
-    
+
+    if request.GET.getlist("star_rating"):
+        filtered_hotels = filtered_hotels.filter(star_rating__gte=request.GET.get("star_rating"))
+
+    if request.GET.get("min_price") and request.GET.get("max_price"):
+        try:
+            min_price = float(request.GET.get("min_price"))
+            max_price = float(request.GET.get("max_price"))
+            print(min_price, "--", max_price)
+            filtered_hotels = [hotel for hotel in filtered_hotels if hotel.min_price >= min_price and hotel.max_price <= max_price]
+        except ValueError:
+            raise HttpResponseBadRequest()
+        
+    if request.GET.getlist("location"):
+        filtered_hotels = all_hotels.filter(address__in=request.GET.getlist("location"))
+
     all_chains = HotelChain.objects.all()
     return render(request, "hotels.html", {"hotels": filtered_hotels, "chains": all_chains,})
 
