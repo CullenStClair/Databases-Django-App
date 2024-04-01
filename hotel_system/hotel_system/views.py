@@ -51,6 +51,5 @@ def crud(request, model_name):
     except LookupError:
         raise Http404(f"Table: {model_name}, does not exist in the database")
     rows = Model.objects.all().defer("").values_list()
-    print(rows)
     fields = [field.name for field in Model._meta.get_fields() if not isinstance(field, models.ManyToOneRel)]
     return render(request, "crud.html", {"model_name": model_name, "rows": rows, "fields": fields})
