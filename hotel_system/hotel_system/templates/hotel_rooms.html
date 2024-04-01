@@ -88,7 +88,7 @@
         {% for room in hotel.rooms.all %}
         <div class="col">
             <div class="card h-100" style="width: 18rem;">
-                <img src={% cycle "../static/hotel2.jpg" "../static/hotel3.jpg" "../static/hotel4.jpg" %} class="card-img-top">
+                <img src={% cycle " /static/hotel1.jpg" "/static/hotel2.jpg" "/static/hotel3.jpg" "/static/hotel4.jpg" %} class="card-img-top">
                 <div class="card-body">
                     <a href="/room/{{ room.id }}">
                         <h5 class="card-title">Room #{{ room.room_num }}</h5>
