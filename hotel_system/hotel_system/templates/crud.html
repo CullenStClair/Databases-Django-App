@@ -55,6 +55,7 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <form method="POST" onsubmit="window.location.reload()">
+                                {% csrf_token %}
                                 <button type="submit" class="btn btn-danger" name="delete" value={{forloop.counter}}>Confirm</button>
                             </form>
                         </div>
