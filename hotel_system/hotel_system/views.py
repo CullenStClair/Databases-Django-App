@@ -42,6 +42,7 @@ def index(request):
 def hotel_rooms(request, hotel_id):
     try:
         hotels = Hotel.objects.get(id=hotel_id)
+        
     except Hotel.DoesNotExist:
         raise Http404(f"Hotel id: {hotel_id}, does not exist")
     return render(request, "hotel_rooms.html", {"hotel": hotels})
