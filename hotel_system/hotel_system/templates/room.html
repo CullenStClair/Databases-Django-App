@@ -19,6 +19,16 @@
                 </ul> 
             </div>
         </div>
+        <div class="row">
+            <h5>Create a Booking</h5>
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                    {{ form.as_table }}
+                </table>
+                <input type="submit" value="Submit">
+            </form>
+        </div>
     </div> 
 </body>
 {% endblock %}

@@ -4,7 +4,8 @@ from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import render
 
 # this is a python file defining all of the different pages
-from hotel_system.models import Amenity, Hotel, HotelChain, Room
+from hotel_system.models import Amenity, Hotel, HotelChain, Room, BookingOrder
+from hotel_system.forms import BookingForm
 
 
 # Create your views here.
@@ -29,7 +30,31 @@ def room(request, room_id):
         room = Room.objects.get(id=room_id)
     except Room.DoesNotExist:
         raise Http404(f"Room id: {room_id}, does not exist")
-    return render(request, "room.html", {"room": room})
+
+    if request.method == 'POST':
+        # Create a form instance and populate it with data from the request (binding):
+        form = BookingForm(request.POST)
+
+        # Check if the form is valid:
+        if form.is_valid():
+            check_in_date = form.cleaned_data['check_in_date']
+            check_out_date = form.cleaned_data['check_out_date']
+            booking_instance = BookingOrder(
+                    room=room,
+                    customer=form.cleaned_data['customer_id'],
+                    check_in_date=check_in_date,
+                    check_out_date=check_out_date,
+                    cost=room.price * ((check_out_date - check_in_date).days + 1),
+                    is_active=True)
+            booking_instance.save()
+
+            # redirect to a new URL:
+            return HttpResponseRedirect(reverse('all-borrowed')) # send to a booking review page
+    # If this is a GET (or any other method) create the default form.
+    else:
+        form = BookingForm()
+
+    return render(request, "room.html", {"form": form, "room": room})
 
 
 def hotel(request, hotel_id):
