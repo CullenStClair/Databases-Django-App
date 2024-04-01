@@ -30,5 +30,5 @@ urlpatterns = [
     path("rooms/", views.rooms),
     path("", views.index),
     path("employee/", views.employee),
-    path("crud/<str:model_name>/", views.crud)
+    path("employee/crud/<str:model_name>/", views.crud)
 ]
