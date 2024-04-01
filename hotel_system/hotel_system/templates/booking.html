@@ -1,0 +1,12 @@
+{% extends "base.html" %} {% block title %} Room {% endblock %}
+{% block content %}
+{% load static %}
+<body>
+    <h4>Thank you for booking!</h4>
+    <p>Booking id: {{ booking.id }}</p>
+    <p>Customer id: {{ booking.customer.id }}</p>
+    <p>Check in date: {{ booking.check_in_date }}</p>
+    <p>Check out date: {{ booking.check_out_date }}</p>
+    <p>Cost: ${{ booking.cost }}</p>
+</body>
+{% endblock %}
