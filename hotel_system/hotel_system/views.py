@@ -1,11 +1,14 @@
 from django.apps import apps
 from django.db import models
-from django.http import Http404, HttpResponseBadRequest
+from django.http import Http404, HttpResponseBadRequest, HttpResponseRedirect 
+from django.urls import reverse
 from django.shortcuts import render
 
 # this is a python file defining all of the different pages
-from hotel_system.models import Amenity, Hotel, HotelChain, Room, BookingOrder
+from hotel_system.models import Amenity, Hotel, HotelChain, Room, BookingOrder, BookingOrder
 from hotel_system.forms import BookingForm
+
+
 
 
 # Create your views here.
@@ -68,7 +71,7 @@ def room(request, room_id):
             booking_instance.save()
 
             # redirect to a new URL:
-            return HttpResponseRedirect(reverse('all-borrowed')) # send to a booking review page
+            return HttpResponseRedirect(reverse("booking", args=(booking_instance.id,)))
     # If this is a GET (or any other method) create the default form.
     else:
         form = BookingForm()
@@ -97,3 +100,10 @@ def crud(request, model_name):
     rows = Model.objects.all().defer("").values_list()
     fields = [field.name for field in Model._meta.get_fields() if not isinstance(field, models.ManyToOneRel)]
     return render(request, "crud.html", {"model_name": model_name, "rows": rows, "fields": fields})
+
+def booking(request, booking_id):
+    try:
+        booking = BookingOrder.objects.get(id=booking_id)
+    except LookupError:
+        raise Http404(f"Booking order does not exist.")
+    return render(request, "booking.html", {"booking": booking})

@@ -28,5 +28,6 @@ urlpatterns = [
     path("room/<int:room_id>/", views.room),
     path("hotel_rooms/<int:hotel_id>/", views.hotel_rooms),
     path("", views.index),    
-    path("employee/", views.employee)
+    path("employee/", views.employee),
+    path("booking/<int:booking_id>", views.booking, name='booking')
 ]
