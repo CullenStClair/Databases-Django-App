@@ -9,8 +9,8 @@ from django.utils.translation import gettext_lazy as _
 
 class BookingForm(forms.Form):
     customer_id = forms.IntegerField(help_text='Enter your customer ID.')
-    check_in_date = forms.DateField(help_text='(dd/mm/yyyy)')
-    check_out_date = forms.DateField(help_text='(dd/mm/yyyy)')
+    check_in_date = forms.DateField(help_text='(mm/dd/yyyy)')
+    check_out_date = forms.DateField(help_text='(mm/dd/yyyy)')
 
     def clean_customer_id(self):
         try:
